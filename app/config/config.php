@@ -10,7 +10,7 @@ define('DB_NAME', 'pos');
 define('APPROOT', dirname(dirname(__FILE__)));
 
 //Url Root
-define('URLROOT', 'http://localhost//pos2');
+define('URLROOT', 'http://localhost//pos7');
 
 //Site Name
 define('SITENAME', 'အန်တီလေး');
