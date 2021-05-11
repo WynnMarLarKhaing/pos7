@@ -218,11 +218,9 @@
             var qty = $(this).val();
             var index = $(this).closest('tr').index() + 1;
             var customer_price = $("#price" + index).text();
-            console.log(qty);
-            console.log(customer_price);
-            console.log(qty * customer_price);
-            $("#totalSpan" + index).text(qty * customer_price);
-            $("#total" + index).val(qty * customer_price);
+            var mul = Math.round(qty * customer_price);
+            $("#totalSpan" + index).text(mul);
+            $("#total" + index).val(mul);
             allSum();
         });
 

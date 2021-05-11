@@ -3,9 +3,9 @@ class Receipts extends Controller
 {
     public function __construct()
     {
-        if (!isLoggedIn()) {
-            redirect('/users/login');
-        }
+        // if (!isLoggedIn()) {
+        //     redirect('/users/login');
+        // }
 
         $this->receiptDetailModel = $this->model('ReceipDetail');
         $this->receiptModel = $this->model('Receipt');

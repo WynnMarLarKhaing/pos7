@@ -3,9 +3,9 @@ class Customers extends Controller
 {
     public function __construct()
     {
-        if (!isLoggedIn()) {
-            redirect('/users/login');
-        }
+        // if (!isLoggedIn()) {
+        //     redirect('/users/login');
+        // }
 
         $this->customerModel = $this->model('Customer');
         $this->userModel = $this->model('User');
