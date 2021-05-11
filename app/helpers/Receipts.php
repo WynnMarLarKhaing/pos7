@@ -91,7 +91,6 @@ class Receipts extends Controller
                             'total'           => $_POST['total'][$key],
                             'disp_sort'     => $key + 1,
                         ];
-                    print_r($data1);
                     if ($this->receiptDetailModel->addReceiptDetail($data1)) {
                         flash('post_message', 'Post Added');
                     } else {
@@ -307,9 +306,6 @@ class Receipts extends Controller
     {
         $receipts = $this->receiptDetailPdfModel->getReceiptDetail($receipt_id);
 
-        // print_r($receipts);
-
-        // die();
 
         $data = [
             'receipts' => $receipts,
