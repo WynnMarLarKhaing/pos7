@@ -235,13 +235,16 @@ function printReceipt($data, $type)
     ';
 
     $sum = 0;
+
+    // print_r($data['receipts']);
+    // die();
+
     foreach($data['receipts'] as $key => $val){
-        // $customer_price = str_replace('6', '၆', $val->customer_price);
-        // $customer_price = str_replace('o', '၀', $customer_price);
+        $total = round($val->total);
 
         $customer_price = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->customer_price); 
         $qty = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty); 
-        $total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), round($val->total)); 
+        $total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $total); 
         $sum_total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->sum_total); 
 
         // $qty = str_replace('6', '၆', $val->qty);

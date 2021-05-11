@@ -292,7 +292,7 @@ class Receipts extends Controller
 
     public function download($receipt_id)
     {
-        $receipts = $this->receiptDetailPdfModel->getReceiptDetail($receipt_id);
+        $receipts = $this->receiptDetailModel->getReceiptDetail($receipt_id);
 
         $data = [
             'receipts' => $receipts,
@@ -304,7 +304,7 @@ class Receipts extends Controller
 
     public function print($receipt_id)
     {
-        $receipts = $this->receiptDetailPdfModel->getReceiptDetail($receipt_id);
+        $receipts = $this->receiptDetailModel->getReceiptDetail($receipt_id);
 
         $data = [
             'receipts' => $receipts,
