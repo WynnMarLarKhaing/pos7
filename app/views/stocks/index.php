@@ -14,10 +14,11 @@
         <table id="stocks" class="table table-responsive table-striped table-bordered">
             <thead>
                 <tr>
-                    <th width="10%">အမှတ်စဉ်</th>
-                    <th width="30%">ပစ္စည်းအမည်</th>
-                    <th width="20%">ပစ္စည်းနံပါတ်</th>
-                    <th width="20%">အထမ်းစျေး</th>
+                    <th width="5%">စဉ်</th>
+                    <th width="20%">ပစ္စည်းအမည်</th>
+                    <th width="25%">ပစ္စည်းအမည်(ဇော်ဂျီ)</th>
+                    <th width="15%">ပစ္စည်းနံပါတ်</th>
+                    <th width="15%">အထမ်းစျေး</th>
                     <th width="20%"></th>
                 </tr>
             </thead>
@@ -26,6 +27,7 @@
                     <tr>
                         <td><?php echo $key + 1; ?></td>
                         <td><?php echo $post->name; ?></td>
+                        <td><?php echo $post->name_zawgyi; ?></td>
                         <td><?php echo $post->stocks_shortcut_id; ?></td>
                         <td><?php echo $post->customer_price; ?></td>
                         <td>
