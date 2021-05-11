@@ -243,7 +243,7 @@ function printReceipt($data, $type)
         $total = round($val->total);
 
         $customer_price = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->customer_price); 
-        $qty = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty); 
+        $qty = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty + 0); 
         $total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $total); 
         $sum_total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->sum_total); 
 
