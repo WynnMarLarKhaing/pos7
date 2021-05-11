@@ -162,6 +162,19 @@ function printPdf1()
 
 function printReceipt($data, $type)
 {
+    $searchReplaceArray = array(
+                            '0' => '၀', 
+                            '1' => '၁',
+                            '2' => '၂',
+                            '3' => '၃',
+                            '4' => '၄',
+                            '5' => '၅',
+                            '6' => '၆',
+                            '7' => '၇',
+                            '8' => '၈',
+                            '9' => '၉'
+                        );
+     
     // create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT,  array(300, 100), true, 'UTF-8', false);
     $pdf->SetMargins(10, 10, 10, true);
@@ -223,15 +236,30 @@ function printReceipt($data, $type)
 
     $sum = 0;
     foreach($data['receipts'] as $key => $val){
-        // $total = $val->qty * $val->customer_price;
-        // $sum += $total;
+        // $customer_price = str_replace('6', '၆', $val->customer_price);
+        // $customer_price = str_replace('o', '၀', $customer_price);
+
+        $customer_price = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->customer_price); 
+        $qty = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty); 
+        $total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->total); 
+        $sum_total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->sum_total); 
+
+        // $qty = str_replace('6', '၆', $val->qty);
+        // $qty = str_replace('o', '၀', $qty);
+
+        // $total = str_replace('6', '၆', $val->total);
+        // $total = str_replace('o', '၀', $total);
+
+        // $sum_total = str_replace('6', '၆', $val->sum_total);
+        // $sum_total = str_replace('o', '၀', $sum_total);
+
         $content .= '
                         <tr>
                             <td align="center" class="second-row">'. ($key + 1) .'</td>
                             <td align="left" class="second-row">' .$val->stock_name_zawgyi. '</td>
-                            <td align="right" class="second-row">' .$val->customer_price. '</td>
-                            <td align="right" class="second-row">' . $val->qty. '</td>
-                            <td align="right" class="second-row">' .$val->total. '</td>
+                            <td align="right" class="second-row">' . $customer_price . '</td>
+                            <td align="right" class="second-row">' . $qty . '</td>
+                            <td align="right" class="second-row">' . $total . '</td>
                         </tr>
                     ';
     }
@@ -239,7 +267,7 @@ function printReceipt($data, $type)
     $content .= '
                     <tr>
                         <td colspan="4" align="right" style="border-left-style: none;" class="third-row">စုစုေပါင္း</td>
-                        <td class="third-row">'. $val->sum_total .'</td>
+                        <td class="third-row">'. str_replace('6', '၆', $sum_total) .'</td>
                     </tr>
                 ';
 
