@@ -137,7 +137,7 @@
                         <tr>
                             <td>စုစုပေါင်း</td>
                             <td>
-                                <span id="allSum"><?php echo $data['receipt']->sum_total; ?></span>
+                                <span id="allSum">0</span>
                                 </span><input type="hidden" class="form-control" id="sum_total" name="sum_total" value="<?php echo $data['receipt']->sum_total; ?>"/>
                             </td>
                         </tr>
@@ -157,7 +157,7 @@
 <?php require_once APPROOT . "/views/inc/footer.php" ?>
 <script>
     $(document).ready(function(){
-        // allSum();
+        allSum();
 
         var ids;
         var customer_id;

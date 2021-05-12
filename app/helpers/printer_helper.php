@@ -221,7 +221,7 @@ function printReceipt($data, $type)
         
         <p>ေန႔စြဲ - '. date_format($updated_date ,"Y/m/d") .
             '<br>အမည္ - '. $customer_name .'
-            <br>ဖုန္း  -  09-975708911
+            <br>ဆိုင္ဖုန္း  -  ၀၉၆၈၉၂၃၃၃၅၃
             <br>No - '. $receipt_id .'
         </p>
         <table class="first">
@@ -236,25 +236,15 @@ function printReceipt($data, $type)
 
     $sum = 0;
 
-    // print_r($data['receipts']);
-    // die();
-
     foreach($data['receipts'] as $key => $val){
         $total = round($val->total);
+
+        $sum += round($val->total);
 
         $customer_price = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->customer_price); 
         $qty = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty + 0); 
         $total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $total); 
-        $sum_total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->sum_total); 
-
-        // $qty = str_replace('6', '၆', $val->qty);
-        // $qty = str_replace('o', '၀', $qty);
-
-        // $total = str_replace('6', '၆', $val->total);
-        // $total = str_replace('o', '၀', $total);
-
-        // $sum_total = str_replace('6', '၆', $val->sum_total);
-        // $sum_total = str_replace('o', '၀', $sum_total);
+        $sum_total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sum); 
 
         $content .= '
                         <tr>
@@ -270,7 +260,7 @@ function printReceipt($data, $type)
     $content .= '
                     <tr>
                         <td colspan="4" align="right" style="border-left-style: none;" class="third-row">စုစုေပါင္း</td>
-                        <td class="third-row">'. str_replace('6', '၆', $sum_total) .'</td>
+                        <td class="third-row">'. str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sum) .'</td>
                     </tr>
                 ';
 
