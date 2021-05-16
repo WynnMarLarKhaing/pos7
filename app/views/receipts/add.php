@@ -38,13 +38,13 @@
                     <tr>
                         <th scope="row">1</th>
                         <td>
-                            <input type="text" class="form-control stocks_shortcut_id" name="stock_id[]" />
+                            <input type="text" class="form-control stocks_shortcut_id" name="stock_id[]" autocomplete="off" />
                         </td>
                         <td>
                             <span id="name1"></span>
                         </td>
                         <td>
-                            <input type="text" class="form-control qty d-none" id="qty1" name="qty[]"/>
+                            <input type="text" class="form-control qty d-none" id="qty1" name="qty[]" autocomplete="off" />
                             <input type="hidden" class="form-control qtyMm" id="qtyMm1" name="qtyMm[]"/>
                         </td>
                         <td>
@@ -87,7 +87,7 @@
         var customer_id;
         $(document).on("focus",".stocks_shortcut_id",function(e){
             ids = $(this).closest('tr').index() + 2;
-            var td = '<tr><th scope="row">' + ids + '</th><td><input type="text" class="form-control stocks_shortcut_id" name="stock_id[]" /></td><td><span id="name' + ids + '"></span></td><td><input type="text" class="form-control qty d-none" id="qty' + ids + '" name="qty[]"/><input type="hidden" class="form-control qtyMm" id="qtyMm' + ids + '" name="qtyMm[]"/></td><td><span id="price' + ids + '"></span><input type="hidden" class="form-control customer_price" id="customer_price' + ids + '" name="customer_price[]"/><input type="hidden" class="form-control customer_priceMm" id="customer_priceMm' + ids + '" name="customer_priceMm[]"/></td><td><span id="totalSpan' + ids + '"></span><input type="hidden" class="form-control total" id="total' + ids + '" name="total[]"/><input type="hidden" class="form-control totalMm" id="totalMm' + ids + '" name="totalMm[]"/></td></tr>';
+            var td = '<tr><th scope="row">' + ids + '</th><td><input type="text" class="form-control stocks_shortcut_id" name="stock_id[]" autocomplete="off" /></td><td><span id="name' + ids + '"></span></td><td><input type="text" class="form-control qty d-none" id="qty' + ids + '" name="qty[]" autocomplete="off" /><input type="hidden" class="form-control qtyMm" id="qtyMm' + ids + '" name="qtyMm[]"/></td><td><span id="price' + ids + '"></span><input type="hidden" class="form-control customer_price" id="customer_price' + ids + '" name="customer_price[]"/><input type="hidden" class="form-control customer_priceMm" id="customer_priceMm' + ids + '" name="customer_priceMm[]"/></td><td><span id="totalSpan' + ids + '"></span><input type="hidden" class="form-control total" id="total' + ids + '" name="total[]"/><input type="hidden" class="form-control totalMm" id="totalMm' + ids + '" name="totalMm[]"/></td></tr>';
             if($(this).parent().parent().is(':last-child')){
                 $('#invoiceTable tr:last').after(td);
             }
