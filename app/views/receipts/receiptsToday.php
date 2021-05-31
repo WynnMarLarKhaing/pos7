@@ -27,7 +27,7 @@
                     <th width="10%">စုစုပေါင်း</th>
                     <th width="15%">နေ့စွဲ</th>
                     <th width="15%"></th>
-                    <th width="25%"></th>
+                    <th width="30%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +42,10 @@
                         <td>
                             <?php if($receipt->save_type != 1): ?>
                                 <a href="<?php echo URLROOT; ?>/receipts/edit/<?php echo $receipt->receipt_id; ?>" class="small-btn btn btn-success pull-left mr-2">
-                                    ကြည့်မယ်
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="<?php echo URLROOT; ?>/receipts/edit/<?php echo $receipt->receipt_id; ?>" class="small-btn btn btn-primary pull-left mr-2">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
                             <?php else: ?>
                                 <a href="<?php echo URLROOT; ?>/receipts/edit/<?php echo $receipt->receipt_id; ?>" class="small-btn btn btn-primary pull-left mr-2">

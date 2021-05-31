@@ -21,10 +21,10 @@
                 <tr>
                     <th width="10%">အမှတ်စဉ်</th>
                     <th width="15%">ဘောင်ချာနံပါတ်</th>
-                    <th width="20%">ရောင်းသူအမည်</th>
+                    <th width="15%">ရောင်းသူအမည်</th>
                     <th width="15%">နေ့စွဲ</th>
                     <th width="15%"></th>
-                    <th width="25%"></th>
+                    <th width="30%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +39,9 @@
                             <?php if($receipt->save_type != 1): ?>
                                 <a href="<?php echo URLROOT; ?>/receipts/edit/<?php echo $receipt->receipt_id; ?>" class="small-btn btn btn-success pull-left mr-2">
                                     ကြည့်မယ်
+                                </a>
+                                <a href="<?php echo URLROOT; ?>/receipts/edit/<?php echo $receipt->receipt_id; ?>" class="small-btn btn btn-primary pull-left mr-2">
+                                    ပြင်မယ်
                                 </a>
                             <?php else: ?>
                                 <a href="<?php echo URLROOT; ?>/receipts/edit/<?php echo $receipt->receipt_id; ?>" class="small-btn btn btn-primary pull-left mr-2">
