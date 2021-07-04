@@ -221,7 +221,7 @@ function printReceipt($data, $type)
         
         <p>ေန႔စြဲ - '. date_format($updated_date ,"Y/m/d") .
             '<br>အမည္ - '. $customer_name .'
-            <br>ဆိုင္ဖုန္း  -  ၀၉၆၈၉၂၃၃၃၅၃
+            <br>ဆိုင္ဖုန္း  -  ၀၉၇၈၂၄၄၅၁၁၈
             <br>No - '. $receipt_id .'
         </p>
         <table class="first">
