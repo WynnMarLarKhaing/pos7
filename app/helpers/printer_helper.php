@@ -340,7 +340,7 @@ function printSellReceipt($data, $type)
                 <td align="center" width="30" class="first-row">စဥ္</td>
                 <td align="center" width="70" class="first-row">အမည္</td>
                 <td align="center" width="60" class="first-row">ပိသာ</td>
-                <td align="center" width="90" class="first-row">အိတ္အေရအတြက္</td>
+                <td align="center" width="70" class="first-row">အိတ္ေပါင္း</td>
             </tr>
     ';
 
