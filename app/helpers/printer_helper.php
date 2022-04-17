@@ -339,7 +339,7 @@ function printSellReceipt($data, $type)
             <tr>
                 <td align="center" width="30" class="first-row">စဥ္</td>
                 <td align="center" width="70" class="first-row">အမည္</td>
-                <td align="center" width="40" class="first-row">Qty</td>
+                <td align="center" width="60" class="first-row">ပိသာ</td>
                 <td align="center" width="90" class="first-row">အိတ္အေရအတြက္</td>
             </tr>
     ';
@@ -348,9 +348,9 @@ function printSellReceipt($data, $type)
     $sumQty = 0;
 
     foreach($data['receipts'] as $key => $val){
-        $total = round($val->total);
-        $sum += round($val->total);
-        $sumQty += round($val->qty);
+        $total = floatval($val->total);
+        $sum += floatval($val->total);
+        $sumQty += floatval($val->qty);
 
         $qty = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty + 0); 
         $total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $total); 
@@ -361,7 +361,7 @@ function printSellReceipt($data, $type)
                             <td align="center" class="second-row">'. ($key + 1) .'</td>
                             <td align="left" class="second-row">' .$val->stock_name_zawgyi. '</td>
                             <td align="right" class="second-row">' . $qty . '</td>
-                            <td align="right" class="second-row">' . $total . '</td>
+                            <td align="right" class="second-row">' . $total . '(H)</td>
                         </tr>
                     ';
     }
