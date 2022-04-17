@@ -163,7 +163,7 @@
         var sum = 0;
         $(".total").each(function() {
             if($(this).val()){
-                var x = parseInt($(this).val());
+                var x = parseFloat($(this).val());
                 sum += x;
             }
         });
@@ -175,7 +175,7 @@
         var sumQty = 0;
         $(".qty").each(function() {
             if($(this).val()){
-                var x = parseInt($(this).val());
+                var x = parseFloat($(this).val());
                 sumQty += x;
             }
         });

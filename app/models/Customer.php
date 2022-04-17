@@ -17,7 +17,8 @@ class Customer
                         address,
                         created_at as postCreated
                         FROM customers 
-                        WHERE admin_flag != 2
+                        WHERE admin_flag = 1
+                        OR admin_flag is NULL
                         ORDER BY customers.updated_at DESC');
         return $this->db->resultSet();
     }

@@ -345,6 +345,7 @@ function printSellReceipt($data, $type)
     ';
 
     $sum = 0;
+    $sumQty = 0;
 
     foreach($data['receipts'] as $key => $val){
         $total = round($val->total);

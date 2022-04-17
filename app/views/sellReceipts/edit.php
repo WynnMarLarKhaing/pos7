@@ -235,7 +235,7 @@
         var sum = 0;
         $(".total").each(function() {
             if($(this).val()){
-                sum += parseInt($(this).val());
+                sum += parseFloat($(this).val());
             }
         });
         $("#allSum").text(sum);
@@ -246,7 +246,7 @@
         var sumQty = 0;
         $(".qty").each(function() {
             if($(this).val()){
-                var x = parseInt($(this).val());
+                var x = parseFloat($(this).val());
                 sumQty += x;
             }
         });
