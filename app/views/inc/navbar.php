@@ -48,7 +48,7 @@
                     <a class="nav-link" href="<?php echo URLROOT; ?>/sellReceipts/add">အရောင်းအသစ်ထည့်မယ်</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="clearSellHistory" href="<?php echo URLROOT; ?>/sellers/clear">အရောင်းဘောင်ချာတွေရှင်းမယ်</a>
+                    <a class="nav-link d-none" id="clearSellHistory" href="<?php echo URLROOT; ?>/sellers/clear">အရောင်းဘောင်ချာတွေရှင်းမယ်</a>
                 </li>
             </ul>
         </div>
