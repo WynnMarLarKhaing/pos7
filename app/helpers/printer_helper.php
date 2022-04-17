@@ -270,3 +270,115 @@ function printReceipt($data, $type)
 
     $pdf->Output($receipt_id.'.pdf', $type);
 }
+
+function printSellReceipt($data, $type)
+{
+    $searchReplaceArray = array(
+                            '0' => '၀', 
+                            '1' => '၁',
+                            '2' => '၂',
+                            '3' => '၃',
+                            '4' => '၄',
+                            '5' => '၅',
+                            '6' => '၆',
+                            '7' => '၇',
+                            '8' => '၈',
+                            '9' => '၉'
+                        );
+     
+    // create new PDF document
+    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT,  array(300, 100), true, 'UTF-8', false);
+    $pdf->SetMargins(10, 10, 10, true);
+    $pdf->setPrintHeader(false);
+    $pdf->setPrintFooter(false);
+
+    // ---------------------------------------------------------
+    $pdf->SetFont('aaa', '', 11);
+    $pdf->AddPage();
+
+    $content = '';
+
+    $receipt_id = $data['receipt_id'];
+    $customer_name_list = array_column($data['receipts'], 'customer_name_zawgyi');
+    $customer_name = $customer_name_list[0];
+
+    $updated_date_list = array_column($data['receipts'], 'updated_at');
+    $updated_date = date_create($updated_date_list[0]);
+
+    $content .= '
+        <style>
+            h3 {
+                font-size: 24pt;
+                text-decoration: underline;
+            }
+            table.first{
+                border: 0.5px solid #000;
+            }
+            td.first-row{
+                border: 1px solid #000;
+                background-color:#C8C8C8;
+            }   
+            td.third-row{
+                border: 1px solid #000;
+                text-align: right;
+            }
+            td.second-row{
+                border-left: 1px solid #000;
+            }
+            table.first td{
+                line-height: 20px;
+            }
+        </style>
+        
+        <p>ေန႔စြဲ - '. date_format($updated_date ,"Y/m/d") .
+            '<br>အမည္ - '. $customer_name .'
+            <br>ဆိုင္ဖုန္း  -  ၀၉၇၉၀၅၅၉၃၈၂
+            <br>No - '. $receipt_id .'
+        </p>
+        <table class="first">
+            <tr>
+                <td align="center" width="30" class="first-row">စဥ္</td>
+                <td align="center" width="70" class="first-row">အမည္</td>
+                <td align="center" width="40" class="first-row">Qty</td>
+                <td align="center" width="90" class="first-row">အိတ္အေရအတြက္</td>
+            </tr>
+    ';
+
+    $sum = 0;
+
+    foreach($data['receipts'] as $key => $val){
+        $total = round($val->total);
+        $sum += round($val->total);
+        $sumQty += round($val->qty);
+
+        $qty = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty + 0); 
+        $total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $total); 
+        $sum_total = str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sum); 
+
+        $content .= '
+                        <tr>
+                            <td align="center" class="second-row">'. ($key + 1) .'</td>
+                            <td align="left" class="second-row">' .$val->stock_name_zawgyi. '</td>
+                            <td align="right" class="second-row">' . $qty . '</td>
+                            <td align="right" class="second-row">' . $total . '</td>
+                        </tr>
+                    ';
+    }
+
+    $content .= '
+                    <tr>
+                        <td colspan="3" align="right" style="border-left-style: none;" class="third-row">စုစုေပါင္း</td>
+                        <td class="third-row">'. str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sumQty) .'</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="right" style="border-left-style: none;" class="third-row">အိတ္အေရအတြက္စုစုေပါင္း</td>
+                        <td class="third-row">'. str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sum) .'</td>
+                    </tr>
+                ';
+
+    $content .= '</table>';
+
+    $pdf->writeHTML($content);
+
+    $pdf->Output($receipt_id.'.pdf', $type);
+}

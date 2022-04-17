@@ -1,5 +1,5 @@
 <?php
-class Customers extends Controller
+class Sellers extends Controller
 {
     public function __construct()
     {
@@ -7,7 +7,7 @@ class Customers extends Controller
         //     redirect('/users/login');
         // }
 
-        $this->customerModel = $this->model('Customer');
+        $this->customerModel = $this->model('Seller');
         $this->userModel = $this->model('User');
     }
 
@@ -18,7 +18,7 @@ class Customers extends Controller
         $data = [
             'customers' => $customers
         ];
-        $this->view('customers/index', $data);
+        $this->view('sellers/index', $data);
     }
 
     public function add()
@@ -51,13 +51,13 @@ class Customers extends Controller
             if (empty($data['name_err']) && empty($data['phone_err'])) {
                 if ($this->customerModel->addPost($data)) {
                     flash('post_message', 'Post Added');
-                    redirect('customers');
+                    redirect('sellers');
                 } else {
                     die("Something went wrong!");
                 }
             } else {
                 //Load view with errors
-                $this->view('customers/add', $data);
+                $this->view('sellers/add', $data);
             }
         } else {
 
@@ -69,7 +69,7 @@ class Customers extends Controller
             ];
         }
 
-        $this->view('customers/add', $data);
+        $this->view('sellers/add', $data);
     }
 
     public function edit($id)
@@ -103,22 +103,18 @@ class Customers extends Controller
             if (empty($data['name_err']) && empty($data['phone_err'])) {
                 if ($this->customerModel->updatePost($data)) {
                     flash('post_message', 'Post updated');
-                    redirect('customers');
+                    redirect('sellers');
                 } else {
                     die("Something went wrong!");
                 }
             } else {
                 //Load view with errors
-                $this->view('customers/edit', $data);
+                $this->view('sellers/edit', $data);
             }
         } else {
 
             //Get existing post from model
             $post = $this->customerModel->getPostById($id);
-
-            // if ($post->user_id != $_SESSION['user_id']) {
-            //     redirect('posts');
-            // }
 
             $data = [
                 'id'    => $id,
@@ -128,7 +124,7 @@ class Customers extends Controller
                 'address'  => trim($post->address),
             ];
         }
-        $this->view('customers/edit', $data);
+        $this->view('sellers/edit', $data);
     }
 
     public function show($id)
@@ -139,7 +135,7 @@ class Customers extends Controller
         $data = [
             'customer' => $customer,
         ];
-        $this->view('customers/show', $data);
+        $this->view('sellers/show', $data);
     }
 
     public function delete($id)
@@ -147,19 +143,19 @@ class Customers extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($this->customerModel->deletePost($id)) {
                 flash('post_message', 'Post deleted');
-                redirect('customers');
+                redirect('sellers');
             } else {
                 die("Something went wrong");
             }
         } else {
-            redirect('customers');
+            redirect('sellers');
         }
     }
 
     public function clear()
     {
         $this->customerModel->clearPost();
-        redirect('customers');
+        redirect('sellers');
     }
 
     public function download($id)
