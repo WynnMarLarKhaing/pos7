@@ -49,7 +49,7 @@
                                 <input type="hidden" class="form-control qtyMm" id="qtyMm<?php echo $index;?>" name="qtyMm[]"/>
                             </td>
                             <td>
-                                <input type="text" class="form-control total" id="total<?php echo $index;?>" name="total[]" value="<?php echo $receipt->total;?>"/>
+                                <input type="text" class="form-control total" id="total<?php echo $index;?>" name="total[]" value="<?php echo $receipt->total + 0;?>"/>
                                 <input type="hidden" class="form-control totalMm" id="totalMm<?php echo $index;?>" name="totalMm[]"/>
                             </td>
                         </tr>
@@ -69,7 +69,8 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table table-bordered" style="margin-top:-17px;">
+                <div id="totalStockDiv"></div>
+                <!-- <table class="table table-bordered" style="margin-top:-17px;">
                     <tbody>
                         <tr>
                             <td>စုစုပေါင်း</td>
@@ -88,7 +89,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         <?php else: ?>
             <div class="col-12">
@@ -122,26 +123,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <table class="table table-bordered" style="margin-top:-17px;">
-                    <tbody>
-                        <tr>
-                            <td>စုစုပေါင်း</td>
-                            <td>
-                                <span id="allSumQty">0</span>
-                                </span><input type="hidden" class="form-control" id="sum_totalQty" name="sum_total"/>
-                                </span><input type="hidden" class="form-control" id="sum_totalMmQty" name="sum_totalMmQty"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>အိတ်အရေအတွက်စုစုပေါင်း</td>
-                            <td>
-                                <span id="allSum">0</span>
-                                </span><input type="hidden" class="form-control" id="sum_total" name="sum_total"/>
-                                </span><input type="hidden" class="form-control" id="sum_totalMm" name="sum_totalMm"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="totalStockDiv"></div>
             </div>
         <?php endif; ?>
     </div>
@@ -149,6 +131,8 @@
     <div class= "text-right">
         <input type="submit" class="btn btn-danger" value="ခဏသိမ်းမည်" name="temp_save" id="temp_save">
         <input type="submit" class="btn btn-success" value="သိမ်းမည်" name="save" id="save">
+        <input type="button" class="btn btn-warning" value="စုစုပေါင်းထုတ်မယ်" name="getTotal" id="getTotal">
+        <input type="hidden" class="form-control" id="total_count" name="total_count" value=0 />
     </div>
 </form>
 <?php require_once APPROOT . "/views/inc/footer.php" ?>
@@ -156,10 +140,15 @@
     $(document).ready(function(){
         allSum();
         allSumQty();
+        getTotal();
 
         var ids;
         var customer_id;
+
         $(document).on("focus",".stocks_shortcut_id",function(e){
+            $('.total_show').remove();
+            $('#total_count').val(0);
+
             ids = $(this).closest('tr').index() + 2;
             var td = '<tr><th scope="row">' + ids + '</th><td><input type="text" class="form-control stocks_shortcut_id" name="stock_id[]" autocomplete="off" /></td><td><span id="name' + ids + '"></span></td><td><input type="text" class="form-control qty d-none" id="qty' + ids + '" name="qty[]" autocomplete="off"/><input type="hidden" class="form-control qtyMm" id="qtyMm' + ids + '" name="qtyMm[]"/></td></td><td><span id="totalSpan' + ids + '"></span><input type="text" class="form-control total d-none" id="total' + ids + '" name="total[]"/><input type="hidden" class="form-control totalMm" id="totalMm' + ids + '" name="totalMm[]"/></td></tr>';
             if($(this).parent().parent().is(':last-child')){
@@ -198,34 +187,52 @@
         });
 
         $(document).on("input",".total",function(e){
+            $('.total_show').remove();
+            $('#total_count').val(0);
             allSum();
         });
 
         $(document).on("input",".qty",function(e){
+            $('.total_show').remove();
+            $('#total_count').val(0);
             allSumQty();
         });
 
+        $("#getTotal").click(function(e){
+            getTotal();
+        });
+
         $("#temp_save").click(function(e){
-            $(".total").each(function(index,item) {
-                var x = $(this).closest('tr').find('.stocks_shortcut_id').val();
-                if(!$(this).val() && x){
-                    alert("အိတ်အရေအတွက်ထည့်ပါ...");
-                    e.preventDefault();
-                    return;
-                }
-            });
+            var total_count = $('#total_count').val();
+            if(total_count < 1){
+                alert("စုစုပေါင်းအရေအတွက်အရင်ထုတ်ပါ...");
+                e.preventDefault();
+            }
+            // $(".total").each(function(index,item) {
+            //     var x = $(this).closest('tr').find('.stocks_shortcut_id').val();
+            //     if(!$(this).val() && x){
+            //         alert("အိတ်အရေအတွက်ထည့်ပါ...");
+            //         e.preventDefault();
+            //         return;
+            //     }
+            // });
             fontChangeMethodCall();
         });
 
         $("#save").click(function(e){
-            $(".total").each(function(index,item) {
-                var x = $(this).closest('tr').find('.stocks_shortcut_id').val();
-                if(!$(this).val() && x){
-                    alert("အိတ်အရေအတွက်ထည့်ပါ...");
-                    e.preventDefault();
-                    return;
-                }
-            });
+            var total_count = $('#total_count').val();
+            if(total_count < 1){
+                alert("စုစုပေါင်းအရေအတွက်အရင်ထုတ်ပါ...");
+                e.preventDefault();
+            }
+            // $(".total").each(function(index,item) {
+            //     var x = $(this).closest('tr').find('.stocks_shortcut_id').val();
+            //     if(!$(this).val() && x){
+            //         alert("အိတ်အရေအတွက်ထည့်ပါ...");
+            //         e.preventDefault();
+            //         return;
+            //     }
+            // });
             fontChangeMethodCall();
         });
 
@@ -314,5 +321,50 @@
             }
         });
         return x;
+    }
+
+    function getTotal(){
+        var total_stocks = {};
+        var total_ids = {};
+        var total_show_flag = true;
+        var total_count = $('#total_count').val();
+
+        $('.total_show').remove();
+        $('#totalStockDiv').empty();
+        
+        $('#invoiceTable > tbody  > tr').each(function(index, tr) { 
+            var stock_id = $(this).find('input[name="stock_id[]"]').val();
+            var stock_name = $(this).find('#name'+(index+1)).text();
+            var stock_qty = $(this).find('input[name="qty[]"]').val();
+            if(stock_id >= 1 && !stock_qty){
+                total_show_flag = false;
+                alert("အရေအတွက်ထည့်ပါ...");
+                return false;
+            }
+            if(stock_id >= 1){
+                total_count++;
+                if (stock_name in total_stocks){
+                    var qty = total_stocks[stock_name];
+                    total_stocks[stock_name] = parseFloat(qty) + parseFloat(stock_qty);
+                    total_ids[stock_id] = parseFloat(qty) + parseFloat(stock_qty);
+                }else{
+                    total_stocks[stock_name] = parseFloat(stock_qty);
+                    total_ids[stock_id] = parseFloat(stock_qty);
+                }
+            }
+        });
+
+        if(total_show_flag){
+            $('#total_count').val(total_count);
+            $.each(total_stocks, function(index, value) {
+                var td = '<tr class="total_show"><td colspan="4" class="text-right">'+ index +'စုစုပေါင်း</td><td class="text-right">' + value.toFixed(2) + '</td></tr>';
+                $('#invoiceTable tr:last').after(td);
+            });
+
+            $.each(total_ids, function(index, value) {
+                var td = '<input type="hidden" class="form-control" name="total_stock_id[]" value="'+ index +'" /><input type="hidden" class="form-control" name="total_stock_qty[]" value="'+ value.toFixed(2) +'" />';
+                $('#totalStockDiv').append(td);
+            });
+        }
     }
 </script>

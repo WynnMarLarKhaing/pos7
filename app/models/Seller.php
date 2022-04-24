@@ -95,5 +95,8 @@ class Seller
 
         $this->db->query('TRUNCATE TABLE sellreceipts');
         $this->db->execute();
+
+        $this->db->query('TRUNCATE TABLE sellreceipts_total');
+        $this->db->execute();
     }
 }

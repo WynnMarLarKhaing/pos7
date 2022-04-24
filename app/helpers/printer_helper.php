@@ -366,16 +366,25 @@ function printSellReceipt($data, $type)
                     ';
     }
 
-    $content .= '
-                    <tr>
-                        <td colspan="3" align="right" style="border-left-style: none;" class="third-row">စုစုေပါင္း</td>
-                        <td class="third-row">'. str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sumQty) .'</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" align="right" style="border-left-style: none;" class="third-row">အိတ္အေရအတြက္စုစုေပါင္း</td>
-                        <td class="third-row">'. str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sum) .'</td>
-                    </tr>
-                ';
+    foreach($data['receiptsTotal'] as $key => $val){
+        $content .= '
+                        <tr>
+                            <td colspan="3" align="right" style="border-left-style: none;" class="third-row">'. $val->stock_name_zawgyi .'စုစုေပါင္း</td>
+                            <td class="third-row">' . str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $val->qty + 0) . '</td>
+                        </tr>
+                    ';
+    }
+
+    // $content .= '
+    //                 <tr>
+    //                     <td colspan="3" align="right" style="border-left-style: none;" class="third-row">စုစုေပါင္းအစမ်းအစမ်းဒဒဒဒဒဒ</td>
+    //                     <td class="third-row">'. str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sumQty) .'</td>
+    //                 </tr>
+    //                 <tr>
+    //                     <td colspan="3" align="right" style="border-left-style: none;" class="third-row">အိတ္အေရအတြက္စုစုေပါင္း</td>
+    //                     <td class="third-row">'. str_replace(array_keys($searchReplaceArray), array_values($searchReplaceArray), $sum) .'</td>
+    //                 </tr>
+    //             ';
 
     $content .= '</table>';
 

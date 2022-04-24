@@ -45,5 +45,14 @@ CREATE TABLE `sellreceipts` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `sellreceipts_total` (
+  `receipt_id` int(11) NOT NULL,
+  `stock_id` int(11) NOT NULL,
+  `qty` decimal(18,2) NOT NULL,
+  `disp_sort` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 drop table sellreceipt_detail;
 drop table sellreceipts;

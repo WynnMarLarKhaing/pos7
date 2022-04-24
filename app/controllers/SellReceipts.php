@@ -11,6 +11,7 @@ class SellReceipts extends Controller
         $this->receiptModel = $this->model('SellReceipt');
         $this->receiptDetailPdfModel = $this->model('SellReceipDetailPdf');
         $this->receiptPdfModel = $this->model('SellReceiptsPdf');
+        $this->SellReceiptsTotal = $this->model('SellReceiptsTotal');
         $this->customerModel = $this->model('Customer');
         $this->stockModel = $this->model('Stock');
         $this->userModel = $this->model('User');
@@ -88,7 +89,7 @@ class SellReceipts extends Controller
                             'customer_id'   => $customer_id,
                             'qty'           => $_POST['qty'][$key],
                             'customer_price'  => 0,
-                            'total'           => $_POST['total'][$key],
+                            'total'           => $_POST['total'][$key] ? $_POST['total'][$key] : 0,
                             'disp_sort'     => $key + 1,
                         ];
                     if ($this->receiptDetailModel->addReceiptDetail($data1)) {
@@ -128,6 +129,23 @@ class SellReceipts extends Controller
                             'disp_sort'     => $key + 1,
                         ];
                     if ($this->receiptDetailPdfModel->addReceiptDetail($dataPdf1)) {
+                        flash('post_message', 'Post Added');
+                    } else {
+                        die("Something went wrong!");
+                    }
+                }
+            }
+
+            //Insert sellreceipts_total
+            foreach($_POST['total_stock_id'] as $key => $stock_id) {
+                if($stock_id && $_POST['total_stock_qty'][$key]){
+                    $dataPdf1 = [
+                            'receipt_id'    => $lastInsertId,
+                            'stock_id'      => $stock_id,
+                            'qty'           => $_POST['total_stock_qty'][$key],
+                            'disp_sort'     => $key + 1,
+                        ];
+                    if ($this->SellReceiptsTotal->addSellReceiptsTotal($dataPdf1)) {
                         flash('post_message', 'Post Added');
                     } else {
                         die("Something went wrong!");
@@ -197,7 +215,7 @@ class SellReceipts extends Controller
                             'customer_id'   => $customer_id,
                             'qty'           => $_POST['qty'][$key],
                             'customer_price'  => $_POST['customer_price'][$key],
-                            'total'           => $_POST['total'][$key],
+                            'total'           => $_POST['total'][$key] ? $_POST['total'][$key] : 0,
                             'disp_sort'     => $key + 1,
                         ];
                         if ($this->receiptDetailModel->addReceiptDetail($data1)) {
@@ -241,6 +259,25 @@ class SellReceipts extends Controller
                         if ($this->receiptDetailPdfModel->addReceiptDetail($data1)) {
                             flash('post_message', 'Post Added');
                             // redirect('sellReceipts/receiptsToday');
+                        } else {
+                            die("Something went wrong!");
+                        }
+                    }
+                }
+            }
+
+            //Insert sellreceipts_total
+            if($this->SellReceiptsTotal->deleteReceiptDetail($receipt_id)){
+                foreach($_POST['total_stock_id'] as $key => $stock_id) {
+                    if($stock_id && $_POST['total_stock_qty'][$key]){
+                        $dataPdf1 = [
+                                'receipt_id'    => $receipt_id,
+                                'stock_id'      => $stock_id,
+                                'qty'           => $_POST['total_stock_qty'][$key],
+                                'disp_sort'     => $key + 1,
+                            ];
+                        if ($this->SellReceiptsTotal->addSellReceiptsTotal($dataPdf1)) {
+                            flash('post_message', 'Post Added');
                         } else {
                             die("Something went wrong!");
                         }
@@ -294,8 +331,11 @@ class SellReceipts extends Controller
     {
         $receipts = $this->receiptDetailModel->getReceiptDetail($receipt_id);
 
+        $receiptsTotal = $this->SellReceiptsTotal->getReceiptsTotal($receipt_id);
+
         $data = [
             'receipts' => $receipts,
+            'receiptsTotal' => $receiptsTotal,
             'receipt_id' => $receipt_id,
         ];
 
@@ -306,8 +346,11 @@ class SellReceipts extends Controller
     {
         $receipts = $this->receiptDetailModel->getReceiptDetail($receipt_id);
 
+        $receiptsTotal = $this->SellReceiptsTotal->getReceiptsTotal($receipt_id);
+
         $data = [
             'receipts' => $receipts,
+            'receiptsTotal' => $receiptsTotal,
             'receipt_id' => $receipt_id,
         ];
 
