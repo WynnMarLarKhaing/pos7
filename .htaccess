@@ -4,6 +4,15 @@
     RewriteRule (.+) public/$1 [L]
 </IfModule>
 
+<IfModule mod_rewrite.c>
+    Options -Multiviews
+    RewriteEngine On
+    RewriteBase /pos8/public
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+</IfModule>
+
 <IfModule mod_php7.c>
 php_value max_execution_time 300
 </IfModule>
